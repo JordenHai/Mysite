@@ -27,5 +27,4 @@ urlpatterns = [
     re_path(r'detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail)  # 动态路由系统
 
 
-
 ]
