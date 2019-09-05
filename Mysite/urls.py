@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import re_path
 from app01 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index),
     path('login/', views.login),
     path('dumps/', views.loadfile),
-    path('home/',  views.Home.as_view())
+    path('home/',  views.Home.as_view()),
+  #  re_path(r'detail-(\d+).html', views.detail),  # 动态路由系统
+    re_path(r'detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail)  # 动态路由系统
+
+
+
 ]

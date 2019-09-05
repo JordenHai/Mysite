@@ -3,25 +3,33 @@ from django.shortcuts import render,HttpResponse,redirect
 # Create your views here.
 # 建议两个都用
 # 类的方式 和 函数
-# USER_DICT = {
-#     '1': {'name' : 'root', 'email' : 'root@live.com'},
-#     '2': {'name' : 'root', 'email' : 'root@live.com'},
-#     '3': {'name' : 'root', 'email' : 'root@live.com'},
-#     '4': {'name' : 'root', 'email' : 'root@live.com'},
-#     '5': {'name' : 'root', 'email' : 'root@live.com'},
-#     '6': {'name' : 'root', 'email' : 'root@live.com'},
-# }
 USER_DICT = {
-    '1': 'ROOT1',
-    '2': 'ROOT2',
-    '3': 'ROOT3',
-    '4': 'ROOT4',
-    '5': 'ROOT5',
+    '1': {'name' : 'root1', 'email' : 'root@live.com'},
+    '2': {'name' : 'root2', 'email' : 'root@live.com'},
+    '3': {'name' : 'root3', 'email' : 'root@live.com'},
+    '4': {'name' : 'root4', 'email' : 'root@live.com'},
+    '5': {'name' : 'root5', 'email' : 'root@live.com'},
+    '6': {'name' : 'root6', 'email' : 'root@live.com'},
 }
+# USER_DICT = {
+#     '1': 'ROOT1',
+#     '2': 'ROOT2',
+#     '3': 'ROOT3',
+#     '4': 'ROOT4',
+#     '5': 'ROOT5',
+# }
 
 def index(request):
     return render(request,'index.html',{'user_dict':USER_DICT})
 
+def detail(request,nid,uid):
+    # return HttpResponse(nid)
+    detail_info = USER_DICT[nid]
+    return render(request,'detail.html',{'detail_info':detail_info})
+    # NID = request.GET.get('nid')
+    # detail_info = USER_DICT[NID]
+    # return render(request,'detail.html',{'detail_info':detail_info})
+    # pass
 
 def login(request):
     if request.method == "GET":
