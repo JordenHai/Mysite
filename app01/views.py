@@ -19,17 +19,31 @@ USER_DICT = {
 #     '5': 'ROOT5',
 # }
 
-def index(request):
+def index(request,nid,uid):
+
+    #生产新的url
+    from django.urls import reverse
+    # v = reverse('indexx', args=(90,))
+    v = reverse('indexx', kwargs={"nid": 3,"uid":5,})
+
+    print(v)
+
     return render(request,'index.html',{'user_dict':USER_DICT})
 
-def detail(request,nid,uid):
+def detail(request,nid):
     # return HttpResponse(nid)
     detail_info = USER_DICT[nid]
     return render(request,'detail.html',{'detail_info':detail_info})
     # NID = request.GET.get('nid')
-    # detail_info = USER_DICT[NID]
+    # detail_info = USER_DICT[NID]v
     # return render(request,'detail.html',{'detail_info':detail_info})
     # pass
+
+# #*args    代表形式参数传递
+# #**kwagrs 代表实参参数传递 字典
+# def details(request,*args,**kwargs):
+#
+#     pass
 
 def login(request):
     if request.method == "GET":
