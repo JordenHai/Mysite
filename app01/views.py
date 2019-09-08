@@ -1,11 +1,34 @@
 from django.shortcuts import render,HttpResponse,redirect
-
+from app01 import models
 # Create your views here.
 # 建议两个都用
 # 类的方式 和 函数
 
 def index(request):
     return render(request,'index.html')
+    pass
+
+def userInfo(request):
+    if request.method == 'GET':
+        user_list = models.UserInfo.objects.all()
+        print(user_list.query)
+        return render(request,'userInfo.html',{'user_list':user_list})
+    if request.method == 'POST':
+        u = request.POST.get('user')
+        p = request.POST.get('passwd')
+        models.UserInfo.objects.create(username=u,password=p)
+        return redirect('/app01/user_info/')
+    pass
+
+def groupInfo(request):
+
+    return render(request,'groupInfo.html')
+    pass
+
+def userDetail(request,nid):
+    obj = models.UserInfo.objects.filter(id=nid).first()
+    # models.UserInfo.objects.get(id=nid)
+    return render(request,'userDetail.html',{'obj':obj})
     pass
 
 def login(request):
@@ -38,7 +61,7 @@ def loadfile(request):
     return render(request,'dump.html')
 
 #数据库操作
-from app01 import models
+
 def orm(request):
     #增加数据
     # models.UserInfo.objects.create(

@@ -17,9 +17,11 @@ from django.urls import path
 from django.urls import re_path
 from app01 import views
 urlpatterns = [
-
     path('login/', views.login),
-    path('index/',views.index),
+    path('index/', views.index),
+    path('user_info/', views.userInfo),
+    path('group_info/', views.groupInfo),
+    re_path('userdetail-(?P<nid>\d+)/',views.userDetail),
     path('orm/',views.orm)
 ]
 
