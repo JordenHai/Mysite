@@ -3,60 +3,22 @@ from django.shortcuts import render,HttpResponse,redirect
 # Create your views here.
 # 建议两个都用
 # 类的方式 和 函数
-USER_DICT = {
-    '1': {'name' : 'root1', 'email' : 'root@live.com'},
-    '2': {'name' : 'root2', 'email' : 'root@live.com'},
-    '3': {'name' : 'root3', 'email' : 'root@live.com'},
-    '4': {'name' : 'root4', 'email' : 'root@live.com'},
-    '5': {'name' : 'root5', 'email' : 'root@live.com'},
-    '6': {'name' : 'root6', 'email' : 'root@live.com'},
-}
-# USER_DICT = {
-#     '1': 'ROOT1',
-#     '2': 'ROOT2',
-#     '3': 'ROOT3',
-#     '4': 'ROOT4',
-#     '5': 'ROOT5',
-# }
 
-def index(request,nid,uid):
-
-    #生产新的url
-    from django.urls import reverse
-    # v = reverse('indexx', args=(90,))
-    v = reverse('indexx', kwargs={"nid": 3,"uid":5,})
-
-    print(v)
-
-    return render(request,'index.html',{'user_dict':USER_DICT})
-
-def detail(request,nid):
-    # return HttpResponse(nid)
-    detail_info = USER_DICT[nid]
-    return render(request,'detail.html',{'detail_info':detail_info})
-    # NID = request.GET.get('nid')
-    # detail_info = USER_DICT[NID]v
-    # return render(request,'detail.html',{'detail_info':detail_info})
-    # pass
-
-# #*args    代表形式参数传递
-# #**kwagrs 代表实参参数传递 字典
-# def details(request,*args,**kwargs):
-#
-#     pass
+def index(request):
+    return render(request,'index.html')
+    pass
 
 def login(request):
     if request.method == "GET":
         return render(request,'login.html')
     if request.method == 'POST':
         u = request.POST.get('user')
-        p = request.POST.get('passwd')
-        # checkbox
-        # request.POST.getlist()
-        if u == 'alex' and p == '123':
-            return redirect('/index/')
+        p = request.POST.get("passwd")
+        obj = models.UserInfo.objects.filter(username=u,password=p).first()
+        if obj:
+            return redirect('/app01/index/')
         else:
-            return  render(request,'login.html')
+            return render(request,'login.html')
     else:
         return redirect('/index/')
 
@@ -75,8 +37,44 @@ def loadfile(request):
 
     return render(request,'dump.html')
 
-from django.views import View
+#数据库操作
+from app01 import models
+def orm(request):
+    #增加数据
+    # models.UserInfo.objects.create(
+    #     username='root',
+    #     password='123',
+    # )
 
+    # obj = models.UserInfo(username='root',password='123456')
+    # obj.save()
+
+    # dic = {'username':'alex','password':666}
+    # models.UserInfo.objects.create(**dic)
+
+    #查询
+    # data = models.UserInfo.objects.all()
+    # print(data)
+    # #data,QuerySet=>Djongo=>[]
+    # #[obj,obj,obj]
+    # for row in data:
+    #     print(row.id,row.username,row.password)
+    # # 模板语言循环就好了
+    # res = models.UserInfo.objects.filter(username='root',password='123')
+    # for row in res:
+    #     print(row.id,row.username,row.password)
+
+    #删除
+    #models.UserInfo.objects.all().delete()
+    #models.UserInfo.objects.filter(id=4).delete()
+
+    #更新
+    # models.UserInfo.objects.all().update(password=666)
+    return HttpResponse('SDASD')
+
+
+
+from django.views import View
 # cbv方式
 # 反射
 class Home(View):
