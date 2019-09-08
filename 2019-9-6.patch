@@ -1,0 +1,80 @@
+Index: app02/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app02/urls.py	(date 1567845533823)
++++ app02/urls.py	(date 1567845533823)
+@@ -0,0 +1,23 @@
++"""Mysite URL Configuration
++
++The `urlpatterns` list routes URLs to views. For more information please see:
++    https://docs.djangoproject.com/en/2.2/topics/http/urls/
++Examples:
++Function views
++    1. Add an import:  from my_app import views
++    2. Add a URL to urlpatterns:  path('', views.home, name='home')
++Class-based views
++    1. Add an import:  from other_app.views import Home
++    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
++Including another URLconf
++    1. Import the include() function: from django.urls import include, path
++    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
++"""
++from django.contrib import admin
++from django.urls import path
++from django.urls import re_path
++from app02 import views
++
++urlpatterns = [
++    path('admin/', admin.site.urls),
++]
+\ No newline at end of file
+Index: Mysite/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Mysite/urls.py	(revision cdf8cc95bdb2b2f1d4ccd31e3afd7b614a30f721)
++++ Mysite/urls.py	(date 1567845582268)
+@@ -13,20 +13,23 @@
+     1. Import the include() function: from django.urls import include, path
+     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+ """
+-from django.contrib import admin
+-from django.urls import path
+-from django.urls import re_path
+-from app01 import views
++
++from django.urls import path,include
+ urlpatterns = [
+-    path('admin/', admin.site.urls),
+-#    re_path('index/(\d+)/', views.index, name='indexx'),
+-    re_path('index/(?P<nid>\d+)/(?P<uid>\d+)', views.index, name='indexx'),
+-
+-    # path('indefsdfsdgshgsfdhgfdhjgfdx/', views.index,name='indexx'),
+-    path('login/', views.login),
+-    path('dumps/', views.loadfile),
+-    path('home/',  views.Home.as_view()),
+-  # re_path(r'detail-(\d+).html', views.detail),  # 动态路由系统
+-  # re_path(r'detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail),  # 动态路由系统
+-    re_path(r'detail-(?P<nid>\d+).html', views.detail),  # 动态路由系统
+-]
++    path('app01/', include("app01.urls")),
++    path('app02/', include("app02.urls")),
++]
++
++#url的分发系统
++"""
++path('admin/', admin.site.urls),
++#re_path('index/(\d+)/', views.index, name='indexx'),
++re_path('index/(?P<nid>\d+)/(?P<uid>\d+)', views.index, name='indexx'),
++# path('indefsdfsdgshgsfdhgfdhjgfdx/', views.index,name='indexx'),
++path('login/', views.login),
++path('dumps/', views.loadfile),
++path('home/',  views.Home.as_view()),
++#re_path(r'detail-(\d+).html', views.detail),  # 动态路由系统
++#re_path(r'detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail),  # 动态路由系统
++re_path(r'detail-(?P<nid>\d+).html', views.detail),  # 动态路由系统
++"""
+\ No newline at end of file
