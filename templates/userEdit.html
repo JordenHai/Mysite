@@ -46,22 +46,13 @@
             <a href="/app01/group_info/" class="menu">用户组管理</a>
         </div>
         <div class="content">
-            <h3>添加用户</h3>
-            <form action="/app01/user_info/" method="post">
-                 <input type="text" name="user" placeholder="用户名">
-                 <input type="text" name="passwd" placeholder="密码">
-                 <input type="submit" value="提交">
+           <h1>编辑用户</h1>
+            <form action="/app01/useredit-{{ obj.id }}/" method="post">
+            <div style="display: none"><input type="text"  value="{{ obj.id }}" name="id"></div>
+            <div><input type="text" value="{{ obj.username }}" name="username"></div>
+            <div><input type="text" value="{{ obj.password }}" name="password"></div>
+            <div><input type="submit" value="提交"></div>
             </form>
-            <h3>用户列表</h3>
-            <ul>
-                {% for row in user_list %}
-                <li>
-                    <a href="/app01/userdetail-{{row.id}}/">{{ row.username }}</a>
-                    <a href="/app01/userdel-{{row.id}}/">删除</a>
-                    <a href="/app01/useredit-{{row.id}}/">编辑</a>
-                </li>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </body>

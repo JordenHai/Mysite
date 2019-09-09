@@ -3,6 +3,19 @@ from app01 import models
 # Create your views here.
 # 建议两个都用
 # 类的方式 和 函数
+def login(request):
+    if request.method == "GET":
+        return render(request,'login.html')
+    if request.method == 'POST':
+        u = request.POST.get('user')
+        p = request.POST.get("passwd")
+        obj = models.UserInfo.objects.filter(username=u,password=p).first()
+        if obj:
+            return redirect('/app01/index/')
+        else:
+            return render(request,'login.html')
+    else:
+        return redirect('/index/')
 
 def index(request):
     return render(request,'index.html')
@@ -21,7 +34,6 @@ def userInfo(request):
     pass
 
 def groupInfo(request):
-
     return render(request,'groupInfo.html')
     pass
 
@@ -31,19 +43,57 @@ def userDetail(request,nid):
     return render(request,'userDetail.html',{'obj':obj})
     pass
 
-def login(request):
-    if request.method == "GET":
-        return render(request,'login.html')
+def userDel(request,nid):
+    obj = models.UserInfo.objects.filter(id=nid).delete()
+    return redirect('/app01/user_info/')
+    pass
+
+def userEdit(request,nid):
+    if request.method == 'GET':
+        obj = models.UserInfo.objects.filter(id=nid).first()
+        return render(request,'userEdit.html',{'obj':obj})
     if request.method == 'POST':
-        u = request.POST.get('user')
-        p = request.POST.get("passwd")
-        obj = models.UserInfo.objects.filter(username=u,password=p).first()
-        if obj:
-            return redirect('/app01/index/')
-        else:
-            return render(request,'login.html')
-    else:
-        return redirect('/index/')
+        nid = request.POST.get('id')
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        models.UserInfo.objects.filter(id=nid).update(username=u,password=p)
+        return redirect('/app01/user_info/')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def loadfile(request):
     if request.method == 'GET':
@@ -95,11 +145,10 @@ def orm(request):
     # models.UserInfo.objects.all().update(password=666)
     return HttpResponse('SDASD')
 
-
-
 from django.views import View
 # cbv方式
 # 反射
+
 class Home(View):
     # 调用父类的方法 进行get 或 post或者其他的操作
     def dispatch(self, request, *args, **kwargs):
@@ -108,6 +157,7 @@ class Home(View):
         res = super(Home,self).dispatch(request,*args,**kwargs)
         print('after')
         return res
+
 
     def get(self,request):
         print(request.method)
