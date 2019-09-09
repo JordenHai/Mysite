@@ -19,5 +19,5 @@ from django.urls import re_path
 from app02 import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
 ]
