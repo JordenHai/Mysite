@@ -143,6 +143,12 @@ def orm(request):
 
     #更新
     # models.UserInfo.objects.all().update(password=666)
+    models.UserGroup.objects.create()
+    models.UserGroup.objects.create()
+    models.UserGroup.objects.create()
+    models.UserGroup.objects.create()
+    models.UserGroup.objects.create()
+
     return HttpResponse('SDASD')
 
 from django.views import View
