@@ -29,7 +29,7 @@ help_text         -> django admin提示
 validators		  -> django form ,自定义错误信息（欠）
 """
 class UserInfo(models.Model):
-    username = models.CharField(max_length=32)
+    username = models.CharField(max_length=32,verbose_name="用户名")
     password = models.CharField(max_length=64)
     user_type_choices = (
         (1, '超级用户'),
